@@ -33,6 +33,7 @@ async function register(req, res) {
 
     return res.status(201).json({
         message: 'User registered successfully',
+        token,
         user: {
             id: user._id,
             username: user.username,
@@ -73,6 +74,7 @@ res.cookie('token', token)
 
 return res.status(200).json({
     message: 'User logged in successfully',
+    token,
     user: {
         id: user._id,
         username: user.username,
@@ -83,4 +85,9 @@ return res.status(200).json({
 
 }
 
-module.exports = {register, loginuser}
+async function logout(req,res){
+    res.clearCookie('token');
+    res.status(200).json({message:"user logout successfully"});
+}
+
+module.exports = {register, loginuser,logout}
